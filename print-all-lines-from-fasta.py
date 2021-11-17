@@ -6,9 +6,9 @@ import matplotlib.pylab as plt
 def main():       
     myPath = '../' 
     hardLink = 'HOMO_38_p13_DATA/'
-    myFile = 'test.txt'
-#    myFile = 'sequence-homo-38-chr22-coding-nucleotides.txt'
-    outpath = myPath + hardLink  + myFile 
+#    myFile = 'test.txt'
+    myFile = 'sequence-homo-38-chr22-coding-nucleotides.txt'
+    outpath = myPath + hardLink + 'OUTPUT/' + myFile 
     filepath = myPath + hardLink + myFile
     chromosome = {}
     if not os.path.isfile(filepath):
@@ -67,7 +67,7 @@ def displayBar(data, outpath):
     values = list(data.values())
     fig, ax = plt.subplots(figsize=(20,10))
     plt.xlabel('Key fastaMd5')
-    plt.ylabel('Value dupiclates')
+    plt.ylabel('Value duplicates')
     plt.title(outpath)
 #tick_label does the some work as plt.xticks()
     #plt.bar(range(100),values,tick_label=shortName)
