@@ -6,9 +6,9 @@ import matplotlib.pylab as plt
 def main():       
     myPath = '../' 
     hardLink = 'HOMO_38_p13_DATA/'
-    myFile =  'sequence-homo-38-chr22-coding-nucleotides.txt'
-    myFile =  'sequence-homo-38-chr22-coding-protein.txt'
-    outpath = myPath + hardLink + 'OUPUT/' + myFile 
+    myFile = 'test.txt'
+#    myFile = 'sequence-homo-38-chr22-coding-nucleotides.txt'
+    outpath = myPath + hardLink  + myFile 
     filepath = myPath + hardLink + myFile
     chromosome = {}
     if not os.path.isfile(filepath):
@@ -26,6 +26,7 @@ def main():
             if isFirst(i, line):
                 buildLabel = '"' + line.strip() + '"'
                 buildLabelMd5 = getHash(i,line)
+                print("================================")
             elif not isAngle(i,line):
                 buildFasta += line
                #buildFasta += line.strip()
@@ -36,8 +37,10 @@ def main():
                     chromosome.update({tmp:dictObj})
                     print("=======================================================")
             elif isAngle(i, line):
+                print("============================= inside is angle > : -------------------------")
                 buildFastaMd5 = getHash(i, buildFasta)
                 dictObj = {'label':buildLabel,'labelMd5':buildLabelMd5,'fastaMd5':buildFastaMd5 }
+                #dictObj = {'labelMd5':buildLabelMd5,'fastaMd5':buildFastaMd5 }
                 tmp =  buildLabelMd5
                 chromosome.update({tmp:dictObj})
                 buildFasta = ""
@@ -48,6 +51,8 @@ def main():
                 buildLabelMd5 = getHash(i,line)
             else:
                 print('######')
+
+        print(len(chromosome))
  
         fo = open(myFile + ".dict.out", 'w')
         fo.write(displayDictDataItems(chromosome))

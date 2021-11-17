@@ -4,11 +4,13 @@ import os #
 from collections import Counter
 import matplotlib.pylab as plt
 def main():       
-    myPath = '../' 
-    hardLink = 'HOMO_38_p13_DATA/'
+    myPath = './' 
+    hardLink = ''
     myFile =  'sequence-homo-38-chr22-coding-nucleotides.txt'
     myFile =  'sequence-homo-38-chr22-coding-protein.txt'
-    outpath = myPath + hardLink + 'OUPUT/' + myFile 
+    myFile = 'chr22-first-last-2671.txt'
+    myFile = 'test.txt'
+    outpath = myPath + hardLink  + myFile 
     filepath = myPath + hardLink + myFile
     chromosome = {}
     if not os.path.isfile(filepath):
@@ -31,10 +33,6 @@ def main():
                #buildFasta += line.strip()
                 if i == numberOfLines-1:
                     buildFastaMd5 = getHash(i, buildFasta)
-                    dictObj = {'label':buildLabel,'labelMd5':buildLabelMd5,'fastaMd5':buildFastaMd5 }
-                    tmp = buildLabelMd5
-                    chromosome.update({tmp:dictObj})
-                    print("=======================================================")
             elif isAngle(i, line):
                 buildFastaMd5 = getHash(i, buildFasta)
                 dictObj = {'label':buildLabel,'labelMd5':buildLabelMd5,'fastaMd5':buildFastaMd5 }

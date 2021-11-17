@@ -4,17 +4,20 @@ import os #
 from collections import Counter
 import matplotlib.pylab as plt
 def main():       
-    myPath = '../' 
-    hardLink = 'HOMO_38_p13_DATA/'
-    myFile =  'sequence-homo-38-chr22-coding-nucleotides.txt'
-    myFile =  'sequence-homo-38-chr22-coding-protein.txt'
-    outpath = myPath + hardLink + 'OUPUT/' + myFile 
+    myPath = '' 
+    hardLink = ''
+    myFile = 'test.txt'
+    outpath = myPath + hardLink  + myFile 
     filepath = myPath + hardLink + myFile
+    print(filepath)
+    print('-------------------------')
     chromosome = {}
     if not os.path.isfile(filepath):
         print("File path {} does not exist. Exiting...".format(filepath))
         sys.exit()
     numberOfLines = countLines(filepath)
+    print(numberOfLines) 
+    print("===================================================")
     with open(filepath) as fp:
         dictObj = {}
         buildFasta = ""
@@ -26,20 +29,34 @@ def main():
             if isFirst(i, line):
                 buildLabel = '"' + line.strip() + '"'
                 buildLabelMd5 = getHash(i,line)
+                print(buildLabel)
+                print(buildLabelMd5)
+                print("================================")
             elif not isAngle(i,line):
                 buildFasta += line
                #buildFasta += line.strip()
                 if i == numberOfLines-1:
+                    print("second to last line")
+                    print(buildLabel)
+                    print(buildLabelMd5)
                     buildFastaMd5 = getHash(i, buildFasta)
                     dictObj = {'label':buildLabel,'labelMd5':buildLabelMd5,'fastaMd5':buildFastaMd5 }
                     tmp = buildLabelMd5
                     chromosome.update({tmp:dictObj})
-                    print("=======================================================")
+                    print(buildFastaMd5)
+                    print(dictObj.values())
+                    print('chromosome.uptade({tmp:dictObj})')
+                    print("end of second to last line")
+                    print("===")
             elif isAngle(i, line):
+                print("============================= inside is angle > : -------------------------")
                 buildFastaMd5 = getHash(i, buildFasta)
                 dictObj = {'label':buildLabel,'labelMd5':buildLabelMd5,'fastaMd5':buildFastaMd5 }
+                #dictObj = {'labelMd5':buildLabelMd5,'fastaMd5':buildFastaMd5 }
                 tmp =  buildLabelMd5
                 chromosome.update({tmp:dictObj})
+                print(dictObj.values())
+                print('chromosome.uptade({tmp:dictObj})')
                 buildFasta = ""
                 buildFastaMd5 = ""
                 buildLabel = ""
@@ -48,6 +65,8 @@ def main():
                 buildLabelMd5 = getHash(i,line)
             else:
                 print('######')
+
+        print(len(chromosome))
  
         fo = open(myFile + ".dict.out", 'w')
         fo.write(displayDictDataItems(chromosome))
